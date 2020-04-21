@@ -69,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
         }
         //写入订单主表数据
         OrderMaster orderMaster = new OrderMaster();
+        alteringOrder.setOrderId(orderId);
         BeanUtils.copyProperties(alteringOrder,orderMaster);
-        orderMaster.setOrderId(orderId);
         orderMaster.setOrderAmount(amount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
@@ -112,12 +112,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public AlteringOrder cancel(AlteringOrder alteringOrder) throws BusineseException {
         //判断订单状态
-        if (!alteringOrder.getOrderStatus().equals(ResponseCodes.ORDER_STATUS_ERROR)){
+        if (!alteringOrder.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())){
             log.error("【取消订单】订单状态不正确，orderId = {},orderStatus = {}",alteringOrder.getOrderId(),alteringOrder.getOrderStatus());
             throw new BusineseException(ResponseCodes.ORDER_STATUS_ERROR);
         }
         //修改订单状态
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(alteringOrder,orderMaster);
         orderMaster.setOrderId(alteringOrder.getOrderId());
         orderMaster.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         alteringOrder.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
@@ -186,5 +187,15 @@ public class OrderServiceImpl implements OrderService {
             throw new BusineseException(ResponseCodes.ORDER_UPDATE_FAIL);
         }
         return alteringOrder;
+    }
+
+    @Override
+    public AlteringOrder checkOrderOwner(String orderId, String openid) throws BusineseException {
+        AlteringOrder order = this.findOne(orderId);
+        if (!order.getBuyerOpenid().equalsIgnoreCase(openid)){
+            log.error("【查询订单】 订单的openid不一致,orderId={},openid={}",orderId,openid);
+            throw new BusineseException(ResponseCodes.ORDER_OWNER_ERROR);
+        }
+        return order;
     }
 }

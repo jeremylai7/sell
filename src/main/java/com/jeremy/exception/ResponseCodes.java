@@ -41,6 +41,14 @@ public class ResponseCodes {
     //订单支付状态不正确
     public static final String ORDER_PAY_STATUS_ERROR = "-9";
 
+    //参数不正确
+    public static final String PARAM_ERROR = "-10";
+
+    //购物车不能为空
+    public static final String CAR_EMPTY = "-11";
+
+    public static final String ORDER_OWNER_ERROR = "-12";
+
     public static String getCodeMessage(String code){
         if (bundle == null){
             bundle = loadProperties();

@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Auther: laizc
@@ -19,7 +20,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @DynamicUpdate
-public class OrderMaster extends BaseVo{
+public class OrderMaster {
 
     /**
      * 订单id
@@ -61,5 +62,15 @@ public class OrderMaster extends BaseVo{
      * 支付状态 默认未支付
      */
     private Integer payStatus = PayStatusEnum.WAIT.getCode();
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
 }

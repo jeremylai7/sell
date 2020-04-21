@@ -12,12 +12,12 @@ import lombok.Setter;
 @Setter
 public class AlteringCart {
 
-    private Integer productStock;
+    private Integer productQuantity;
 
     private String productId;
 
-    public AlteringCart(String productId,Integer productStock) {
-        this.productStock = productStock;
+    public AlteringCart(String productId,Integer productQuantity) {
+        this.productQuantity = productQuantity;
         this.productId = productId;
     }
 }

@@ -53,4 +53,12 @@ public interface OrderService {
      * @return
      */
     AlteringOrder pay(AlteringOrder alteringOrder) throws BusineseException;
+
+    /**
+     * 查询订单是否为当前操作人订单
+     * @param orderId
+     * @param openid
+     * @return
+     */
+    AlteringOrder checkOrderOwner(String orderId,String openid) throws BusineseException;
 }

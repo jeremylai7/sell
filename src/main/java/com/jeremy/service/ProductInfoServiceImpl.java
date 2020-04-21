@@ -53,7 +53,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
             if (productInfo == null){
                 throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
             }
-            Integer add = alteringCart.getProductStock() + productInfo.getProductStock();
+            Integer add = alteringCart.getProductQuantity() + productInfo.getProductStock();
             productInfo.setProductStock(add);
             productInfoDao.save(productInfo);
         }
@@ -68,7 +68,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
             if (productInfo == null){
                 throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
             }
-            Integer subPrductStock = productInfo.getProductStock() - alteringCart.getProductStock();
+            Integer subPrductStock = productInfo.getProductStock() - alteringCart.getProductQuantity();
             if (subPrductStock < 0){
                 //库存不足
                 throw new BusineseException(ResponseCodes.PRODUCT_UNDER_STOCK);

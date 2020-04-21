@@ -1,14 +1,18 @@
 package com.jeremy.alter;
 
-import com.jeremy.enums.OrderStatusEnum;
-import com.jeremy.enums.PayStatusEnum;
-import com.jeremy.model.OrderDetail;
-import lombok.Getter;
-import lombok.Setter;
+        import com.fasterxml.jackson.annotation.JsonInclude;
+        import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+        import com.jeremy.enums.OrderStatusEnum;
+        import com.jeremy.enums.PayStatusEnum;
+        import com.jeremy.model.OrderDetail;
+        import com.jeremy.util.serializer.DateToLongSerializer;
+        import lombok.Getter;
+        import lombok.Setter;
 
-import javax.persistence.Id;
-import java.math.BigDecimal;
-import java.util.List;
+        import javax.persistence.Id;
+        import java.math.BigDecimal;
+        import java.util.Date;
+        import java.util.List;
 
 /**
  * @Auther: laizc
@@ -17,6 +21,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AlteringOrder {
     /**
      * 订单id
@@ -60,4 +65,16 @@ public class AlteringOrder {
     private Integer payStatus = PayStatusEnum.WAIT.getCode();
 
     private List<OrderDetail> orderDetailList;
+
+    /**
+     * 创建时间
+     */
+    @JsonSerialize(using = DateToLongSerializer.class)
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    @JsonSerialize(using = DateToLongSerializer.class)
+    private Date updateTime;
 }

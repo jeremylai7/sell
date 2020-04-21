@@ -21,5 +21,5 @@ public class BaseVo {
     /**
      * 更新时间
      */
-    private Date updaetTime;
+    private Date updateTime;
 }
