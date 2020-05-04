@@ -36,9 +36,9 @@
                                 <td>${order.orderStatus}</td>
                                 <td>${order.getPayStatusEnum().message}</td>
                                 <td>${order.createTime}</td>
-                                <td>详情</td>
+                                <td><a href="/sell/seller/order/detail?orderId=${order.orderId}">详情</a></td>
                                 <td>
-                                    <#if order.orderStatus != 2>
+                                    <#if order.orderStatus == 0>
                                         <a href="/sell/seller/order/cancel?orderId=${order.orderId}">取消</a>
                                     </#if>
                                 </td>

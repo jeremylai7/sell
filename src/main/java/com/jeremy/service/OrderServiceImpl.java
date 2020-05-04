@@ -179,11 +179,9 @@ public class OrderServiceImpl implements OrderService {
             throw new BusineseException(ResponseCodes.ORDER_PAY_STATUS_ERROR);
         }
         //修改支付状态
-        alteringOrder.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+        alteringOrder.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(alteringOrder,orderMaster);
-        orderMaster.setOrderId(alteringOrder.getOrderId());
-        orderMaster.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         OrderMaster orderMasterUpdate = orderMasterDao.save(orderMaster);
         if (orderMasterUpdate == null){
             log.error("【订单支付】更新失败，orderId={},payStatus={}",alteringOrder.getOrderId(),alteringOrder.getPayStatus());

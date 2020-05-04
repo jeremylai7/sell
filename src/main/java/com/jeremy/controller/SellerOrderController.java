@@ -29,13 +29,17 @@ public class SellerOrderController {
         ModelAndView modelAndView = new ModelAndView("/order/list");
         PageRequest pageRequest = new PageRequest(page-1,pageSize);
         Page<AlteringOrder> alteringOrderPage = orderService.findList(pageRequest);
-        System.out.println(alteringOrderPage.getTotalPages());
         modelAndView.addObject("currentPage",page);
         modelAndView.addObject("pageSize",pageSize);
         modelAndView.addObject("orderPage",alteringOrderPage);
         return modelAndView;
     }
 
+    /**
+     * 订单取消
+     * @param orderId
+     * @return
+     */
     @GetMapping("/cancel")
     public ModelAndView cancel(@RequestParam("orderId")String orderId) {
         try {
@@ -53,6 +57,37 @@ public class SellerOrderController {
         return modelAndView;
     }
 
+    @GetMapping("/detail")
+    public ModelAndView detail(@RequestParam("orderId")String orderId){
+        AlteringOrder alteringOrder;
+        try {
+             alteringOrder = orderService.findOne(orderId);
+        } catch (BusineseException e) {
+            ModelAndView view =new ModelAndView("common/error");
+            view.addObject("msg",e.getMessage());
+            view.addObject("url","/sell/seller/order/list");
+            return view;
+        }
+        ModelAndView modelAndView = new ModelAndView("order/detail");
+        modelAndView.addObject("order",alteringOrder);
+        return modelAndView;
+    }
 
+    @GetMapping("/finish")
+    public ModelAndView finish(@RequestParam("orderId")String orderId){
+        try {
+            AlteringOrder alteringOrder = orderService.findOne(orderId);
+            orderService.finish(alteringOrder);
+        } catch (BusineseException e) {
+            ModelAndView view =new ModelAndView("common/error");
+            view.addObject("msg",e.getMessage());
+            view.addObject("url","/sell/seller/order/list");
+            return view;
+        }
+        ModelAndView modelAndView = new ModelAndView("common/success");
+        modelAndView.addObject("msg","订单完结成功");
+        modelAndView.addObject("url","/sell/seller/order/list");
+        return modelAndView;
+    }
 
 }

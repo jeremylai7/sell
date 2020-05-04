@@ -12,9 +12,9 @@ server:
   context-path: /sell
 weixin:
   #测试账号appid
-  mpAppId: wxeb7a44cb0e923a00
+  #mpAppId: wxeb7a44cb0e923a00
   #微信支付appid
-  #mpAppId: wxd898fcb01713c658
+  mpAppId: wxd898fcb01713c658
   #测试账号密钥
   mpSecretKey: 552d1e4ddf39b19a61e8bb419beca8d7
   mchId: 1483469312

@@ -55,6 +55,7 @@ public class PayController {
     public ModelAndView notyfy(@RequestBody String responseData) throws BusineseException{
         payService.notyfy(responseData);
         //返回消息给微信
+        System.out.println(1111);
         ModelAndView view = new ModelAndView("pay/success");
         return view;
 

@@ -34,7 +34,6 @@ public class WeixinController {
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+weixinConfig.getMpAppId()+"&secret="+weixinConfig.getMpSecretKey()+"&code="+code+"&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url,String.class);
-        System.out.println(response);
         JSONObject jsonObject = JSONObject.parseObject(response);
         //System.out.println(jsonObject);
         String token = jsonObject.getString("access_token");
