@@ -1,10 +1,12 @@
 package com.jeremy.alter;
 
+        import com.fasterxml.jackson.annotation.JsonIgnore;
         import com.fasterxml.jackson.annotation.JsonInclude;
         import com.fasterxml.jackson.databind.annotation.JsonSerialize;
         import com.jeremy.enums.OrderStatusEnum;
         import com.jeremy.enums.PayStatusEnum;
         import com.jeremy.model.OrderDetail;
+        import com.jeremy.util.CodeEnumUtil;
         import com.jeremy.util.serializer.DateToLongSerializer;
         import lombok.Getter;
         import lombok.Setter;
@@ -77,4 +79,14 @@ public class AlteringOrder {
      */
     @JsonSerialize(using = DateToLongSerializer.class)
     private Date updateTime;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+        return CodeEnumUtil.getByCode(orderStatus,OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum(){
+        return CodeEnumUtil.getByCode(payStatus,PayStatusEnum.class);
+    }
 }

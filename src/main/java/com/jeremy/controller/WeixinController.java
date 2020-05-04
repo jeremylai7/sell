@@ -2,9 +2,11 @@ package com.jeremy.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jeremy.config.WeixinConfig;
 import com.jeremy.util.OutUtil;
 import com.jeremy.view.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +25,13 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/weixin")
 @Slf4j
 public class WeixinController {
+    @Autowired
+    private WeixinConfig weixinConfig;
 
     @GetMapping("/auth")
     public Result auth(@RequestParam("code")String code){
         log.info(code);
-        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx3c71f34ea8643139&secret=a1cffe33d04ca0603ad242d9ad7f5d7e&code="+code+"&grant_type=authorization_code";
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+weixinConfig.getMpAppId()+"&secret="+weixinConfig.getMpSecretKey()+"&code="+code+"&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url,String.class);
         System.out.println(response);

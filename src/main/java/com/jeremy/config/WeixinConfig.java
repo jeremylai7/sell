@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @ConfigurationProperties(prefix = "weixin")
 public class WeixinConfig {
-    private String mpAppid;
+    private String mpAppId;
 
     private String mpSecretKey;
 
@@ -24,5 +24,7 @@ public class WeixinConfig {
     private String mchKey;
 
     private String keyPath;
+
+    private String notifyUrl;
 
 }

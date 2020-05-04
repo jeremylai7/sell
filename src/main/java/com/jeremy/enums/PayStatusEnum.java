@@ -8,7 +8,7 @@ import lombok.Getter;
  * @Description: 订单状态
  */
 @Getter
-public enum PayStatusEnum {
+public enum PayStatusEnum implements BaseCodeEnum{
     WAIT(0,"等待支付"),
     SUCCESS(1,"支付成功"),
     ;

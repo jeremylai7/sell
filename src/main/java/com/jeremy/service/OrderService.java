@@ -61,4 +61,11 @@ public interface OrderService {
      * @return
      */
     AlteringOrder checkOrderOwner(String orderId,String openid) throws BusineseException;
+
+    /**
+     * 订单列表
+     * @param pageable
+     * @return
+     */
+    Page<AlteringOrder> findList(Pageable pageable);
 }

@@ -57,6 +57,7 @@ public class ResponseCodes {
     }
 
     private static ResourceBundle loadProperties(){
-        return ResourceBundle.getBundle("", Locale.getDefault());
+        ResourceBundle bundle = ResourceBundle.getBundle("message/reponse-message", Locale.SIMPLIFIED_CHINESE);
+        return bundle;
     }
 }

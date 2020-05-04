@@ -1,15 +1,19 @@
 package com.jeremy.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jeremy.alter.AlteringOrder;
 import com.jeremy.exception.BusineseException;
+import com.jeremy.exception.ResponseCodes;
 import com.jeremy.service.OrderService;
 import com.jeremy.service.PayService;
+import com.jeremy.util.JsonUtil;
+import com.jeremy.util.MathUtil;
+import com.lly835.bestpay.model.PayResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /** 微信支付
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/pay")
+@Slf4j
 public class PayController {
 
     @Autowired
@@ -31,9 +36,31 @@ public class PayController {
     public ModelAndView create(@RequestParam("orderId")String orderId, @RequestParam("returnUrl")String returnUrl) throws BusineseException {
         AlteringOrder alteringOrder = orderService.findOne(orderId);
         //订单支付
-        //payService.create(alteringOrder);
-        return new ModelAndView("pay/create");
+        PayResponse payResponse = payService.create(alteringOrder);
+        ModelAndView view = new ModelAndView("pay/create");
+        view.addObject("payResponse",payResponse);
+        view.addObject("returnUrl",returnUrl);
+        return view;
 
     }
+
+
+    /**
+     * 支付结果异步通知
+     * @param responseData
+     * @return
+     * @throws BusineseException
+     */
+    @PostMapping("/notify")
+    public ModelAndView notyfy(@RequestBody String responseData) throws BusineseException{
+        payService.notyfy(responseData);
+        //返回消息给微信
+        ModelAndView view = new ModelAndView("pay/success");
+        return view;
+
+    }
+
+
+
 
 }

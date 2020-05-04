@@ -19,11 +19,12 @@ public class WechatPayConfig {
     @Bean
     public BestPayServiceImpl bestPayService(){
         WxPayH5Config wxPayH5Config = new WxPayH5Config();
-        wxPayH5Config.setAppId(weixinConfig.getMpAppid());
+        wxPayH5Config.setAppId(weixinConfig.getMpAppId());
         wxPayH5Config.setAppSecret(weixinConfig.getMpSecretKey());
         wxPayH5Config.setMchId(weixinConfig.getMchId());
         wxPayH5Config.setMchKey(weixinConfig.getMchKey());
         wxPayH5Config.setKeyPath(weixinConfig.getKeyPath());
+        wxPayH5Config.setNotifyUrl(weixinConfig.getNotifyUrl());
         BestPayServiceImpl bestPayService = new BestPayServiceImpl();
         bestPayService.setWxPayH5Config(wxPayH5Config);
         return bestPayService;

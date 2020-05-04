@@ -11,9 +11,16 @@ spring:
 server:
   context-path: /sell
 weixin:
-  mpAppid: wx3c71f34ea8643139
-  mpSecretKey: a1cffe33d04ca0603ad242d9ad7f5d7e
-  mchId:
-  mchKey:
-  keyPath:
+  #测试账号appid
+  mpAppId: wxeb7a44cb0e923a00
+  #微信支付appid
+  #mpAppId: wxd898fcb01713c658
+  #测试账号密钥
+  mpSecretKey: 552d1e4ddf39b19a61e8bb419beca8d7
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+  notifyUrl: http://selles.natapp1.cc/sell/pay/notify
+  keyPath: /var/h5.p12
+
+
 

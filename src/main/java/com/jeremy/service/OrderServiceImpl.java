@@ -45,6 +45,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterDao orderMasterDao;
 
+    @Autowired
+    private PayService payService;
+
     @Override
     @Transactional
     public AlteringOrder create(AlteringOrder alteringOrder) throws BusineseException {
@@ -118,10 +121,8 @@ public class OrderServiceImpl implements OrderService {
         }
         //修改订单状态
         OrderMaster orderMaster = new OrderMaster();
-        BeanUtils.copyProperties(alteringOrder,orderMaster);
-        orderMaster.setOrderId(alteringOrder.getOrderId());
-        orderMaster.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         alteringOrder.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
+        BeanUtils.copyProperties(alteringOrder,orderMaster);
         OrderMaster orderMasterUpdate = orderMasterDao.save(orderMaster);
         if (orderMasterUpdate == null){
             throw new BusineseException(ResponseCodes.ORDER_UPDATE_FAIL);
@@ -137,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
         productInfoService.increaseStock(alteringCartList);
         //如果支付，退款
         if (alteringOrder.getPayStatus() == PayStatusEnum.SUCCESS.getCode()){
-            //TODO
+            payService.refund(alteringOrder);
         }
         return alteringOrder;
     }
@@ -153,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
         //修改订单状态
         alteringOrder.setOrderStatus(OrderStatusEnum.FINISH.getCode());
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(alteringOrder,orderMaster);
         orderMaster.setOrderId(alteringOrder.getOrderId());
         orderMaster.setOrderStatus(OrderStatusEnum.FINISH.getCode());
         OrderMaster orderMasterUpdate = orderMasterDao.save(orderMaster);
@@ -172,13 +174,14 @@ public class OrderServiceImpl implements OrderService {
             throw new BusineseException(ResponseCodes.ORDER_STATUS_ERROR);
         }
         //判断支付状态
-        if (alteringOrder.getPayStatus().equals(PayStatusEnum.WAIT.getCode())){
+        if (!alteringOrder.getPayStatus().equals(PayStatusEnum.WAIT.getCode())){
             log.error("【订单支付】订单支付状态不正确，orderId={},payStatus={}",alteringOrder.getOrderId(),alteringOrder.getPayStatus());
             throw new BusineseException(ResponseCodes.ORDER_PAY_STATUS_ERROR);
         }
         //修改支付状态
         alteringOrder.setOrderStatus(OrderStatusEnum.FINISH.getCode());
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(alteringOrder,orderMaster);
         orderMaster.setOrderId(alteringOrder.getOrderId());
         orderMaster.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         OrderMaster orderMasterUpdate = orderMasterDao.save(orderMaster);
@@ -197,5 +200,12 @@ public class OrderServiceImpl implements OrderService {
             throw new BusineseException(ResponseCodes.ORDER_OWNER_ERROR);
         }
         return order;
+    }
+
+    @Override
+    public Page<AlteringOrder> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasterPage = orderMasterDao.findAll(pageable);
+        List<AlteringOrder> alteringOrderList = OrderConverter.convert(orderMasterPage.getContent());
+        return new PageImpl<>(alteringOrderList,pageable,orderMasterPage.getTotalElements());
     }
 }
