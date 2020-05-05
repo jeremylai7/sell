@@ -25,6 +25,11 @@ public interface ProductInfoService {
 
     Page<ProductInfo> findAll(Pageable pageable);
 
+    /**
+     * 新增、修改
+     * @param productInfo
+     * @return
+     */
     ProductInfo save(ProductInfo productInfo);
 
     //加库存
@@ -32,5 +37,17 @@ public interface ProductInfoService {
 
     //减库存
     void decreaseStock(List<AlteringCart> alteringCartList) throws BusineseException;
+
+    /**
+     * 上架
+     * @param productId 商品id
+     */
+    void onSale(String productId) throws BusineseException;
+
+    /**
+     * 下架
+     * @param productId  商品id
+     */
+    void offSale(String productId) throws BusineseException;
 
 }

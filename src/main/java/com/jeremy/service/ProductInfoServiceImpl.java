@@ -27,7 +27,8 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 
     @Override
     public ProductInfo findOne(String productId) {
-        return productInfoDao.findOne(productId);
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        return productInfo;
     }
 
     @Override
@@ -76,5 +77,31 @@ public class ProductInfoServiceImpl implements ProductInfoService{
             productInfo.setProductStock(subPrductStock);
             productInfoDao.save(productInfo);
         }
+    }
+
+    @Override
+    public void onSale(String productId) throws BusineseException {
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        if (productInfo == null){
+            throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
+        }
+        if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP){
+            throw new BusineseException(ResponseCodes.PRODUCT_STATUS_ERROR);
+        }
+        productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
+        productInfoDao.save(productInfo);
+    }
+
+    @Override
+    public void offSale(String productId) throws BusineseException {
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        if (productInfo == null){
+            throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
+        }
+        if (productInfo.getProductStatusEnum() == ProductStatusEnum.DOWN){
+            throw new BusineseException(ResponseCodes.PRODUCT_STATUS_ERROR);
+        }
+        productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
+        productInfoDao.save(productInfo);
     }
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @Auther: laizc
@@ -18,7 +19,7 @@ import javax.persistence.Id;
 @Entity
 //动态更新
 @DynamicUpdate
-public class ProductCategory extends BaseVo{
+public class ProductCategory{
 
     @Id
     @GeneratedValue
@@ -33,6 +34,16 @@ public class ProductCategory extends BaseVo{
      * 类目编号
      */
     private Integer categoryType;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
     @Override
     public String toString() {
@@ -50,4 +61,6 @@ public class ProductCategory extends BaseVo{
         this.categoryName = categoryName;
         this.categoryType = categoryType;
     }
+
+
 }

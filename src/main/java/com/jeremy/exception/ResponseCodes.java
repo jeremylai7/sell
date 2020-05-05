@@ -47,7 +47,11 @@ public class ResponseCodes {
     //购物车不能为空
     public static final String CAR_EMPTY = "-11";
 
+    //订单不属于你
     public static final String ORDER_OWNER_ERROR = "-12";
+
+    //商品状态不正常
+    public static final String PRODUCT_STATUS_ERROR = "-13";
 
     public static String getCodeMessage(String code){
         if (bundle == null){

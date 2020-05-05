@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Auther: laizc
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @DynamicUpdate
-public class OrderDetail extends BaseVo{
+public class OrderDetail{
     /**
      *
      */
@@ -53,5 +54,16 @@ public class OrderDetail extends BaseVo{
      * 商品图片
      */
     private String productIcon;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
 
 }
