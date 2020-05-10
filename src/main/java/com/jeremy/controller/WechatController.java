@@ -1,7 +1,8 @@
 package com.jeremy.controller;
 
-import com.jeremy.config.WechatMpConfig;
-import com.jeremy.view.ViewProduct;
+import com.jeremy.config.ProjectUrlConfig;
+import com.jeremy.exception.BusineseException;
+import com.jeremy.exception.ResponseCodes;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -29,9 +30,15 @@ public class WechatController {
     @Autowired
     private WxMpService wxMpService;
 
+    @Autowired
+    private WxMpService wxOpenService;
+
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
+
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl")String returnUrl) throws UnsupportedEncodingException {
-        String url = "http://selles.natapp1.cc/sell/wechat/info?returnUrl="+returnUrl;
+        String url = projectUrlConfig.getWechatMpAuthorize()+ "/sell/wechat/info?returnUrl="+returnUrl;
         String redictUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl,"UTF-8"));
         return "redirect:"+redictUrl;
     }
@@ -45,6 +52,33 @@ public class WechatController {
             log.error("【微信授权登录】error"+e.getError().getErrorMsg());
             e.printStackTrace();
         }
+        String openid = wxMpOAuth2AccessToken.getOpenId();
+        return "redirect:"+returnUrl + "?openid="+openid;
+    }
+
+    /**
+     * 微信扫码登录
+     * @param returnUrl
+     * @return
+     */
+    @GetMapping("/qr-authorize")
+    public String qrAuthorize(@RequestParam("returnUrl")String returnUrl) throws UnsupportedEncodingException {
+        String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qr-info?returnUrl="+returnUrl;
+        String redictUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QrConnectScope.SNSAPI_LOGIN,URLEncoder.encode(returnUrl,"UTF-8"));
+        return "redirect:"+redictUrl;
+    }
+
+    @GetMapping("/qr-info")
+    public String qrInfo(@RequestParam("code")String code) throws BusineseException {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+        try {
+            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            log.error("【微信授权登录】error={}"+e.getError().getErrorMsg());
+            throw new BusineseException(ResponseCodes.WX_MP_ERROR);
+        }
+        //String returnUrl = "http://selles.natapp1.cc/sell/seller/order/list";
+        String returnUrl = "http://selles.natapp1.cc/sell/seller/login";
         String openid = wxMpOAuth2AccessToken.getOpenId();
         return "redirect:"+returnUrl + "?openid="+openid;
     }

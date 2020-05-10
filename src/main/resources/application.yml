@@ -8,6 +8,9 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  redis:
+    host: 192.168.31.234
+    port: 6379
 server:
   context-path: /sell
 weixin:
@@ -17,10 +20,16 @@ weixin:
   mpAppId: wxd898fcb01713c658
   #测试账号密钥
   mpSecretKey: 552d1e4ddf39b19a61e8bb419beca8d7
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
   mchId: 1483469312
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   notifyUrl: http://selles.natapp1.cc/sell/pay/notify
   keyPath: /var/h5.p12
+projectUrl:
+  wechatMpAuthorize: http://selles.natapp1.cc
+  wechatOpenAuthorize: http://selles.natapp1.cc
+  sell: http://selles.natapp1.cc
 
 
 

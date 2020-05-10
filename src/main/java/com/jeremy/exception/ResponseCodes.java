@@ -53,6 +53,9 @@ public class ResponseCodes {
     //商品状态不正常
     public static final String PRODUCT_STATUS_ERROR = "-13";
 
+    //微信公众号错误
+    public static final String WX_MP_ERROR = "-14";
+
     public static String getCodeMessage(String code){
         if (bundle == null){
             bundle = loadProperties();
