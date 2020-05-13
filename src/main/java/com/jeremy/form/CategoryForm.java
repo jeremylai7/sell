@@ -2,7 +2,6 @@ package com.jeremy.form;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @Auther: laizc

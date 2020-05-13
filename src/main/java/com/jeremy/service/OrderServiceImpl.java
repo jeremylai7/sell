@@ -8,6 +8,7 @@ import com.jeremy.dao.OrderMasterDao;
 import com.jeremy.enums.OrderStatusEnum;
 import com.jeremy.enums.PayStatusEnum;
 import com.jeremy.exception.BusineseException;
+import com.jeremy.exception.ResponseBankException;
 import com.jeremy.exception.ResponseCodes;
 import com.jeremy.model.OrderDetail;
 import com.jeremy.model.OrderMaster;
@@ -48,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PayService payService;
 
+    @Autowired
+    private WebSocket webSocket;
+
     @Override
     @Transactional
     public AlteringOrder create(AlteringOrder alteringOrder) throws BusineseException {
@@ -59,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
             if (productInfo == null) {
                 //商品不存在
                 throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
+                //throw new ResponseBankException();
             }
             BeanUtils.copyProperties(productInfo, orderDetail);
             //总价计算
@@ -83,6 +88,8 @@ public class OrderServiceImpl implements OrderService {
             new AlteringCart(e.getProductId(),e.getProductQuantity())
         ).collect(Collectors.toList());
         productInfoService.decreaseStock(cartList);
+        //发送消息
+        webSocket.sendMessage("有新的订单");
         return alteringOrder;
     }
 
@@ -162,6 +169,9 @@ public class OrderServiceImpl implements OrderService {
             log.error("【完结订单】更新失败，orderId={},orderStatus={}",alteringOrder.getOrderId(),alteringOrder.getOrderStatus());
             throw new BusineseException(ResponseCodes.ORDER_UPDATE_FAIL);
         }
+
+        //TODO 推送模板消息
+        //pushMessageService.orderStatus(alteringOrder);
         return alteringOrder;
     }
 

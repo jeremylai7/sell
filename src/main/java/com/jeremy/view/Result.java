@@ -14,7 +14,7 @@ public class Result {
     /**
      * 错误码
      */
-    private Integer code;
+    private String code;
 
     /**
      * 提示信息
@@ -23,7 +23,7 @@ public class Result {
 
     private Object data;
 
-    public Result(Integer code, String message, Object data) {
+    public Result(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
