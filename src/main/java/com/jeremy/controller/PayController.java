@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @Date: 2020/4/18 16:04
  * @Description:
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/pay")
 @Slf4j

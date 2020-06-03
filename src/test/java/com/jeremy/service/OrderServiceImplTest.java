@@ -42,7 +42,7 @@ public class OrderServiceImplTest {
 
     @Test
     public void findList() throws Exception {
-        PageRequest pageRequest = new PageRequest(0,2);
+        PageRequest pageRequest = PageRequest.of(0,2);
         Page<AlteringOrder> alteringOrderPage =  orderService.findList(OPEN_ID,pageRequest);
         System.out.println(alteringOrderPage);
     }
@@ -63,7 +63,7 @@ public class OrderServiceImplTest {
 
     @Test
     public void list(){
-        PageRequest pageRequest = new PageRequest(0,2);
+        PageRequest pageRequest = PageRequest.of(0,2);
         Page<AlteringOrder> page = orderService.findList(pageRequest);
         System.out.println(page);
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @Date: 2020/5/3 23:08
  * @Description:
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/seller/order")
 public class SellerOrderController {
@@ -27,7 +29,7 @@ public class SellerOrderController {
     public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,
                              @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize){
         ModelAndView modelAndView = new ModelAndView("/order/list");
-        PageRequest pageRequest = new PageRequest(page-1,pageSize);
+        PageRequest pageRequest = PageRequest.of(page-1,pageSize);
         Page<AlteringOrder> alteringOrderPage = orderService.findList(pageRequest);
         modelAndView.addObject("currentPage",page);
         modelAndView.addObject("pageSize",pageSize);

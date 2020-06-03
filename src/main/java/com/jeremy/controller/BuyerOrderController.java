@@ -27,6 +27,7 @@ import javax.validation.Valid;
  * @Date: 2020/3/30 23:34
  * @Description: 买家订单
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/buyer/order")
 @Slf4j
@@ -62,7 +63,7 @@ public class BuyerOrderController {
             log.error("【查询订单】 openid为空");
             throw new BusineseException(ResponseCodes.PARAM_ERROR);
         }
-        PageRequest pageable = new PageRequest(page,size);
+        PageRequest pageable = PageRequest.of(page,size);
         Page<AlteringOrder> alteringOrderPage = orderService.findList(openid,pageable);
         return OutUtil.success(alteringOrderPage.getContent());
     }

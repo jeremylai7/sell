@@ -25,7 +25,7 @@ public class ProductCategoryDaoTest {
 
     @Test
     public void findOne(){
-        ProductCategory productCategory = productCategoryDao.findOne(1);
+        ProductCategory productCategory = productCategoryDao.findById(1).orElse(null);
         System.out.println(productCategory.toString());
     }
 
@@ -48,7 +48,7 @@ public class ProductCategoryDaoTest {
 
     @Test
     public void findAndUpdate(){
-        ProductCategory productCategory = productCategoryDao.findOne(1);
+        ProductCategory productCategory = productCategoryDao.findById(1).orElse(null);
         productCategory.setCategoryType(7);
         productCategoryDao.save(productCategory);
     }

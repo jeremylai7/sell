@@ -10,6 +10,7 @@ import com.jeremy.view.ViewProduct;
 import com.jeremy.view.ViewProductInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * @Date: 2020/3/28 16:34
  * @Description: 买家商品
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/buyer/product")
 public class BuyerProductController {
@@ -32,6 +34,8 @@ public class BuyerProductController {
 
     @Autowired
     private ProductCategoryService productCategoryService;
+
+
     @GetMapping("/list")
     public Result list(){
         //查询所有上架产品

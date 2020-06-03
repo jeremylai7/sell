@@ -26,7 +26,7 @@ public class LoggerTest {
         String name = "admin";
         String password = "1234";
         log.info("name:{},password {}",name,password);
-        int aa = Integer.parseInt("string");
+
 
     }
 

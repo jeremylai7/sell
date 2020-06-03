@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@ConfigurationProperties("projectUrl")
+@ConfigurationProperties("project-url")
 @Component
 public class ProjectUrlConfig {
     private String wechatMpAuthorize;

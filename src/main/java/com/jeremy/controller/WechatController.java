@@ -10,6 +10,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import java.net.URLEncoder;
  * @Date: 2020/4/12 14:46
  * @Description:
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/wechat")
 @Slf4j
@@ -78,7 +80,7 @@ public class WechatController {
             throw new BusineseException(ResponseCodes.WX_MP_ERROR);
         }
         //String returnUrl = "http://selles.natapp1.cc/sell/seller/order/list";
-        String returnUrl = "http://selles.natapp1.cc/sell/seller/login";
+        String returnUrl = "http://sell.jeremy7.cn/sell/seller/login";
         String openid = wxMpOAuth2AccessToken.getOpenId();
         return "redirect:"+returnUrl + "?openid="+openid;
     }

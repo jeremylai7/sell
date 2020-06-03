@@ -1,17 +1,12 @@
 package com.jeremy.config.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisShardInfo;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -76,14 +71,16 @@ public class RedisService{
         return redisTemplate.hasKey(key);
     }
 
-    /*public static void main(String[] args) {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.31.234",6379,10000);
-        //jedisShardInfo.setPassword("1234561");
-        Jedis jedis = new Jedis(jedisShardInfo);
-        jedis.connect();
-        jedis.set("name","jeremy");
-        System.out.println(jedis.get("token_c52763c4-8fd5-484c-aabf-92492a550dd3"));
-        //jedis.connect();
-        jedis.close();
-    }*/
+//    public static void main(String[] args) {
+//        JedisConnectionFactory JedisShardInfo = new JedisConnectionFactory();
+//        JedisShardInfo
+//        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.31.234",6379,10000);
+//        //jedisShardInfo.setPassword("1234561");
+//        Jedis jedis = new Jedis(jedisShardInfo);
+//        jedis.connect();
+//        jedis.set("name","jeremy");
+//        System.out.println(jedis.get("token_c52763c4-8fd5-484c-aabf-92492a550dd3"));
+//        //jedis.connect();
+//        jedis.close();
+//    }
 }

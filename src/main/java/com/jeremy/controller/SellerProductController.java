@@ -14,10 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -28,6 +25,7 @@ import java.util.List;
  * @Date: 2020/5/5 10:55
  * @Description: 买家商品
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/seller/product")
 public class SellerProductController {
@@ -48,7 +46,7 @@ public class SellerProductController {
     public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,
                              @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize){
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        PageRequest pageRequest = new PageRequest(page-1,pageSize);
+        PageRequest pageRequest = PageRequest.of(page-1,pageSize);
         Page<ProductInfo> productInfoPage = productInfoService.findAll(pageRequest);
         modelAndView.addObject("currentPage",page);
         modelAndView.addObject("pageSize",pageSize);

@@ -27,7 +27,11 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 
     @Override
     public ProductInfo findOne(String productId) {
-        ProductInfo productInfo = productInfoDao.findOne(productId);
+        /**
+         * 如果存在id返回信息，否则返回null
+         * .get() 抛异常
+         */
+        ProductInfo productInfo = productInfoDao.findById(productId).orElse(null);
         return productInfo;
     }
 
@@ -50,7 +54,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
     @Transactional
     public void increaseStock(List<AlteringCart> alteringCartList) throws BusineseException {
         for(AlteringCart alteringCart : alteringCartList){
-            ProductInfo productInfo = productInfoDao.findOne(alteringCart.getProductId());
+            ProductInfo productInfo = productInfoDao.findById(alteringCart.getProductId()).orElse(null);
             if (productInfo == null){
                 throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
             }
@@ -65,7 +69,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
     @Transactional
     public void decreaseStock(List<AlteringCart> alteringCartList) throws BusineseException {
         for(AlteringCart alteringCart : alteringCartList){
-            ProductInfo productInfo = productInfoDao.findOne(alteringCart.getProductId());
+            ProductInfo productInfo = productInfoDao.findById(alteringCart.getProductId()).orElse(null);
             if (productInfo == null){
                 throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
             }
@@ -81,7 +85,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 
     @Override
     public void onSale(String productId) throws BusineseException {
-        ProductInfo productInfo = productInfoDao.findOne(productId);
+        ProductInfo productInfo = productInfoDao.findById(productId).orElse(null);
         if (productInfo == null){
             throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
         }
@@ -94,7 +98,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
 
     @Override
     public void offSale(String productId) throws BusineseException {
-        ProductInfo productInfo = productInfoDao.findOne(productId);
+        ProductInfo productInfo = productInfoDao.findById(productId).orElse(null);
         if (productInfo == null){
             throw new BusineseException(ResponseCodes.PRODUCT_NOT_EXIST);
         }

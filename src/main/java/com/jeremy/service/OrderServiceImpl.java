@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public AlteringOrder findOne(String orderId) throws BusineseException {
-        OrderMaster orderMaster =orderMasterDao.findOne(orderId);
+        OrderMaster orderMaster =orderMasterDao.findById(orderId).orElse(null);
         if (orderMaster == null){
             //订单不存在
             throw new BusineseException(ResponseCodes.ORDER_NOT_EXIST);
