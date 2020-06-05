@@ -51,7 +51,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void increaseStock(List<AlteringCart> alteringCartList) throws BusineseException {
         for(AlteringCart alteringCart : alteringCartList){
             ProductInfo productInfo = productInfoDao.findById(alteringCart.getProductId()).orElse(null);
@@ -66,7 +66,7 @@ public class ProductInfoServiceImpl implements ProductInfoService{
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void decreaseStock(List<AlteringCart> alteringCartList) throws BusineseException {
         for(AlteringCart alteringCart : alteringCartList){
             ProductInfo productInfo = productInfoDao.findById(alteringCart.getProductId()).orElse(null);

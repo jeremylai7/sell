@@ -19,13 +19,16 @@ spring:
     password: 1234561
   main:
     allow-bean-definition-overriding: true
-server:
-  servlet:
-    context-path: /sell
+  mvc:
+    view:
+        suffix: .ftl
 projectUrl:
   wechatMpAuthorize: http://sell.jeremy7.cn
   wechatOpenAuthorize: http://sell.jeremy7.cn
   sell: http://sell.jeremy7.cn
+server:
+  servlet:
+    context-path: /sell
 
 ---
 spring:
@@ -45,6 +48,9 @@ spring:
     password: 1234561
   main:
     allow-bean-definition-overriding: true
+  mvc:
+    view:
+      suffix: .ftl
 projectUrl:
   wechatMpAuthorize: http://sell.jeremy7.cn
   wechatOpenAuthorize: http://sell.jeremy7.cn
