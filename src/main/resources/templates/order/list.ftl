@@ -103,7 +103,7 @@
     document.getElementById("notice").play();
     var wesocket = null
     if ("WebSocket" in window){
-        wesocket = new WebSocket("ws://selles.natapp1.cc/sell/webSocket")
+        wesocket = new WebSocket("ws://sell.jeremy7.cn/sell/webSocket")
     }else {
         alert("您的浏览器不支持 WebSocket!");
     }
