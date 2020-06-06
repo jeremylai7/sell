@@ -6,6 +6,7 @@ import com.jeremy.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,8 @@ public class SellerOrderController {
     public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,
                              @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize){
         ModelAndView modelAndView = new ModelAndView("/order/list");
-        PageRequest pageRequest = PageRequest.of(page-1,pageSize);
+        Sort sort = new Sort(Sort.Direction.DESC,"createTime");
+        PageRequest pageRequest = PageRequest.of(page-1,pageSize,sort);
         Page<AlteringOrder> alteringOrderPage = orderService.findList(pageRequest);
         modelAndView.addObject("currentPage",page);
         modelAndView.addObject("pageSize",pageSize);

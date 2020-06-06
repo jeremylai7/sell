@@ -13,7 +13,7 @@ import javax.websocket.server.ServerEndpoint;
  */
 @Component
 public class WebSocketConfig {
-    //tomcat启动无需该配置
+
 //    @Bean
 //    public ServerEndpointExporter serverEndpointExporter(){
 //        return new ServerEndpointExporter();

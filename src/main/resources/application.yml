@@ -19,9 +19,6 @@ spring:
     password: 1234561
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    view:
-        suffix: .ftl
 projectUrl:
   wechatMpAuthorize: http://sell.jeremy7.cn
   wechatOpenAuthorize: http://sell.jeremy7.cn

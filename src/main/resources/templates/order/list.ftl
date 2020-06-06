@@ -100,7 +100,7 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
-    document.getElementById("notice").play();
+    //document.getElementById("notice").play();
     var wesocket = null
     if ("WebSocket" in window){
         wesocket = new WebSocket("ws://sell.jeremy7.cn/sell/webSocket")
