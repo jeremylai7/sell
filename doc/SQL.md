@@ -1,3 +1,4 @@
+```
 -- 类目
 create table `product_category` (
     `category_id` int not null auto_increment,
@@ -65,3 +66,4 @@ create table `seller_info` (
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`seller_id`)
 ) comment '卖家信息表';
+```
