@@ -26,7 +26,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
             <fileNamePattern>
-                /var/info.%d.log
+                var/info.%d.log
             </fileNamePattern>
         </rollingPolicy>
     </appender>
@@ -44,7 +44,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
             <fileNamePattern>
-                /var/error.%d.log
+                var/error.%d.log
             </fileNamePattern>
         </rollingPolicy>
     </appender>
